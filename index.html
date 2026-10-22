@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Notai · reuniões e conversas num só lugar</title>
+  <meta name="description" content="O Notai é uma extensão para o Google Chrome que transcreve reuniões do Google Meet e do Microsoft Teams e junta tudo, com e-mails, WhatsApp e Google Chat, num lugar só que você consulta em linguagem natural. Sem bot, sem servidor e sem custo por minuto." />
+  <link rel="icon" href="icon128.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+
+  <header class="top">
+    <a class="brand" href="./"><img src="icon128.png" alt="" width="30" height="30" /><span>Notai</span></a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#recursos">Recursos</a>
+      <a href="#perguntas">Perguntas</a>
+      <a class="cta" href="#instalar">Instalar</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="pill"><span class="pill-dot"></span>Reuniões · e-mail · WhatsApp · Google Chat</span>
+        <h1>Tudo o que foi dito,<br /><span class="grad">num só lugar.</span></h1>
+        <p class="lede">O Notai transcreve suas reuniões do Google Meet e do Microsoft Teams, acompanha e-mails, conversas do WhatsApp e espaços do Google Chat, e liga tudo às pessoas certas. Depois é só perguntar: quem pediu o quê, o que ficou decidido, o que a Ana disse na semana passada.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#instalar">Instalar no Chrome <span class="arrow">→</span></a>
+          <a class="btn btn-ghost" href="#como-funciona">Ver como funciona</a>
+        </div>
+        <p class="note"><strong>Uso interno da IPNET.</strong> Por enquanto o login aceita só contas Google da IPNET.</p>
+        <ul class="proof" aria-label="O que o Notai garante">
+          <li><strong>5</strong><span>fontes num lugar só</span></li>
+          <li><strong>0</strong><span>cliques por reunião</span></li>
+          <li><strong>R$ 0</strong><span>por minuto transcrito</span></li>
+          <li><strong>0</strong><span>servidores no meio</span></li>
+        </ul>
+      </div>
+      <figure class="sample" aria-label="Exemplo de transcrição">
+        <figcaption>
+          <span class="win"><i></i><i></i><i></i></span>
+          <span class="sample-name">2026-11-18 10h00 Meet — Alinhamento Projeto Aurora.md</span>
+          <span class="sample-tag"><span class="live-dot"></span>Drive · sincronizado</span>
+        </figcaption>
+        <div class="sample-body">
+          <div class="line"><span class="t">00:00:12</span><span class="who">Marina Castro</span><span class="txt">Bom dia, pessoal. Vamos começar pelo cronograma da fase dois.</span></div>
+          <div class="line"><span class="t">00:00:31</span><span class="who">Felipe Nogueira</span><span class="txt">Perfeito. A Orbital Soluções pediu a proposta revisada até sexta.</span></div>
+          <div class="line ev">------- ENTROU NA CONFERÊNCIA: Ana Lúcia Prado · 10:06 -------</div>
+          <div class="line"><span class="t">00:06:02</span><span class="who">Ana Lúcia Prado</span><span class="txt">Cheguei. Posso falar da integração quando quiserem.</span></div>
+          <div class="line"><span class="t">00:06:40</span><span class="who">Marina Castro</span><span class="txt">Ótimo, então fechamos o escopo hoje.</span></div>
+        </div>
+      </figure>
+    </section>
+
+    <section id="como-funciona">
+      <div class="section-head">
+        <span class="eyebrow">Como funciona</span>
+        <h2>Você trabalha como sempre. O Notai anota.</h2>
+      </div>
+      <ol class="steps">
+        <li class="card"><span class="step-n">01</span><h3>Reuniões viram ata sozinhas</h3><p>No Meet e no Teams, o Notai transcreve pelas legendas, com o nome de quem falou e o chat da reunião. Nenhum bot entra na chamada e nenhum áudio é gravado.</p></li>
+        <li class="card"><span class="step-n">02</span><h3>Conversas entram no mesmo lugar</h3><p>E-mails do Gmail, grupos e pessoas do WhatsApp Web e espaços do Google Chat, inclusive o histórico e os áudios, que viram texto. Cada trecho guarda de onde veio.</p></li>
+        <li class="card"><span class="step-n">03</span><h3>Você pergunta, o Notai responde</h3><p>A IA extrai decisões, pendências e perfis de pessoas, reconhece a mesma pessoa em fontes diferentes e responde citando a reunião, o e-mail ou a conversa de origem.</p></li>
+      </ol>
+    </section>
+
+    <section id="recursos" class="bento">
+      <article class="card span-2"><span class="icon">👤</span><h3>Pessoas, não "Speaker 0"</h3><p>Cada pessoa ganha uma ficha com cargo, empresa, contatos e observações que a IA mantém atualizadas. O Notai junta a mesma pessoa vinda do Meet, do Teams, do e-mail e do WhatsApp, e pede sua confirmação quando não tem certeza.</p></article>
+      <article class="card"><span class="icon">↩</span><h3>Histórico, não só daqui pra frente</h3><p>Busque meses de e-mails, conversas do WhatsApp e espaços do Google Chat. A busca segue em segundo plano e mostra o andamento.</p></article>
+      <article class="card"><span class="icon">⇄</span><h3>Áudio vira texto</h3><p>Áudios do WhatsApp e do Google Chat são transcritos e entram no Notai como qualquer mensagem.</p></article>
+      <article class="card span-2 accent"><span class="icon">🔒</span><h3>Seus dados, seu Drive</h3><p>Nenhum servidor do Notai. Atas e o conhecimento extraído vão para o seu Google Drive, no formato do Obsidian. O texto dos e-mails e das conversas fica no seu navegador, e as chaves de acesso ficam cifradas.</p></article>
+    </section>
+
+    <section id="instalar" class="install">
+      <div>
+        <span class="eyebrow">Instalar</span>
+        <h2>Pronto em dois minutos.</h2>
+        <ol>
+          <li><strong>Adicione ao Chrome</strong> pela Chrome Web Store.</li>
+          <li><strong>Conecte a conta Google</strong> nas Configurações do Notai: um login só, para Drive, Gmail e Google Chat.</li>
+          <li><strong>Entre numa reunião</strong> do Meet ou do Teams. A transcrição começa sozinha.</li>
+        </ol>
+        <div class="cta-row" style="margin-top: 22px">
+          <a class="btn btn-primary" id="store-link" href="https://chromewebstore.google.com/search/Notai" target="_blank" rel="noopener">Abrir na Chrome Web Store <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <aside class="ipnet">
+        <h3>Uso interno da IPNET</h3>
+        <p>Por enquanto, o Notai é usado só dentro da IPNET: o login aceita apenas contas Google da IPNET.</p>
+        <p>Com outra conta, a instalação funciona, mas o Google recusa a conexão com o Drive, o Gmail e o Google Chat.</p>
+      </aside>
+    </section>
+
+    <section id="perguntas" class="faq">
+      <div class="section-head">
+        <span class="eyebrow">Perguntas frequentes</span>
+        <h2>O que costuma gerar dúvida.</h2>
+      </div>
+      <div class="faq-list">
+        <details class="card" open><summary>Preciso ligar as legendas do Meet?</summary><p>Não. O Notai liga o CC sozinho e transcreve por ele; se você desligar o CC, ele respeita. Há também um modo sem CC, em que nada aparece na tela.</p></details>
+        <details class="card"><summary>Os outros participantes veem alguma coisa?</summary><p>Nenhum bot entra na chamada. Por isso mesmo, avise que a reunião está sendo transcrita; o Notai pode mandar esse aviso no chat da reunião por você.</p></details>
+        <details class="card"><summary>Funciona no Teams e no Zoom?</summary><p>No Teams web, sim: o Notai liga as legendas sozinho, transcreve e guarda o chat da reunião. O Zoom ainda não é coberto.</p></details>
+        <details class="card"><summary>Onde ficam os meus dados?</summary><p>Não existe servidor do Notai. Atas e o conhecimento extraído vão para o seu Drive; o texto de e-mails e conversas fica no seu navegador. Com uma IA em nuvem, os trechos analisados vão para o provedor que você escolher. Detalhes na <a href="politica-de-privacidade/">política de privacidade</a>.</p></details>
+        <details class="card"><summary>Preciso pagar por IA?</summary><p>Não para transcrever. Para resumir e responder perguntas, você escolhe entre a IA do próprio Chrome (Gemini Nano), gratuita, e um provedor em nuvem com a sua chave.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>Notai · reuniões, e-mail e conversas num só lugar</span>
+    <nav aria-label="Rodapé">
+      <a href="politica-de-privacidade/">Política de privacidade</a>
+      <a href="termos-de-uso/">Termos de uso</a>
+      <a href="mailto:rodrigorbonfim@gmail.com">Contato</a>
+    </nav>
+  </footer>
+</body>
+</html>
