@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Notai para empresas · Notai</title>
+  <meta name="description" content="Configure o Notai para a sua empresa com Google Workspace: login com o cadastro da própria empresa, sem verificação do Google, com Gmail, Google Chat e Drive." />
+  <link rel="icon" href="../icon128.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .gen { display: grid; gap: 12px; margin: 16px 0; padding: 20px 22px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line-2); }
+    .gen label { display: grid; gap: 6px; font-size: 14px; font-weight: 600; color: var(--text); }
+    .gen input, .gen select { font: inherit; font-weight: 400; padding: 9px 11px; border-radius: 10px; border: 1px solid var(--line-2); background: #0d1316; color: var(--text); }
+    .gen .row { display: flex; gap: 10px; align-items: center; font-weight: 500; }
+    .gen .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .gen .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+    .gen button { font: inherit; cursor: pointer; }
+    .gen .out { font-size: 13.5px; color: var(--text-2); min-height: 1.4em; }
+    .gen .out.err { color: #ff9b9b; }
+    @media (max-width: 700px) { .gen .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+  <header class="top">
+    <a class="brand" href="../"><img src="../icon128.png" alt="" width="30" height="30" /><span>Notai</span></a>
+    <nav class="nav" aria-label="Principal"><a href="../#como-funciona">Como funciona</a><a href="../politica-de-privacidade/">Privacidade</a><a class="cta" href="../#instalar">Instalar</a></nav>
+  </header>
+  <main>
+    <article class="doc">
+      <h1>Notai para empresas</h1>
+      <p class="meta">Para empresas com Google Workspace · cerca de 10 minutos, uma vez só</p>
+      <div class="summary">
+        <ul>
+          <li>O login usa o cadastro da <strong>sua empresa</strong> no Google Cloud, do tipo <strong>Interno</strong>: o Google não exige verificação, não mostra aviso de app não verificado e não limita o número de usuários.</li>
+          <li>Você decide o que liberar: Gmail, Google Chat e o Drive (só o que o Notai cria, ou o Drive inteiro).</li>
+          <li>Só contas dos domínios da empresa conseguem entrar.</li>
+          <li>A equipe recebe a configuração por um link ou arquivo cifrados com uma senha sua, ou automaticamente pela política do Admin Console.</li>
+        </ul>
+      </div>
+
+      <h2>1. Projeto e APIs no Google Cloud</h2>
+      <ul>
+        <li>Em <a href="https://console.cloud.google.com/projectcreate" target="_blank" rel="noopener">console.cloud.google.com</a>, crie um projeto da organização (ex.: "Notai").</li>
+        <li>Em APIs e serviços → Biblioteca, ative a <strong>Google Drive API</strong>, a <strong>Gmail API</strong> e a <strong>Google Chat API</strong> (as duas últimas só se for liberar e-mails e Chat).</li>
+        <li>Na Google Chat API → Configuração, preencha nome, ícone e descrição do app. O Google exige isso mesmo sem bot.</li>
+      </ul>
+
+      <h2>2. Tela de consentimento Interna</h2>
+      <ul>
+        <li>Em Google Auth Platform → Branding, use o nome da empresa e o e-mail de suporte.</li>
+        <li>Em Público, escolha <strong>Interno</strong>. É isso que dispensa a verificação do Google.</li>
+      </ul>
+
+      <h2>3. Cliente OAuth</h2>
+      <ul>
+        <li>Em Clientes → Criar cliente, escolha <strong>Aplicativo da Web</strong>.</li>
+        <li>Em URIs de redirecionamento autorizados, adicione exatamente: <code>https://dehlandkobgbbgkkjokhnkllopbijbge.chromiumapp.org/</code></li>
+        <li>Guarde o Client ID e o Client Secret para o passo 4.</li>
+      </ul>
+
+      <h2>4. Gere a configuração da equipe</h2>
+      <p>Tudo abaixo acontece neste navegador: nada é enviado ao site do Notai nem a servidor nenhum.</p>
+      <form class="gen" id="gen" autocomplete="off" onsubmit="return false">
+        <div class="grid">
+          <label>Nome da empresa<input id="empresa" required placeholder="ex.: Minha Empresa" /></label>
+          <label>Domínios das contas<input id="dominios" required placeholder="ex.: empresa.com.br" /></label>
+          <label>Client ID<input id="clientId" required spellcheck="false" placeholder="xxxx.apps.googleusercontent.com" /></label>
+          <label>Client Secret<input id="clientSecret" type="password" required /></label>
+        </div>
+        <label class="row"><input id="gmail" type="checkbox" checked /> Liberar a leitura do Gmail</label>
+        <label class="row"><input id="chat" type="checkbox" checked /> Liberar a leitura do Google Chat</label>
+        <label>Acesso ao Drive
+          <select id="drive"><option value="notai">Só o que o Notai cria (recomendado)</option><option value="completo">Drive inteiro (para continuar numa pasta que já existe)</option></select>
+        </label>
+        <div class="grid">
+          <label>Senha da empresa<input id="pass" type="password" autocomplete="new-password" placeholder="mínimo 12 caracteres" /></label>
+          <label>Repita a senha<input id="pass2" type="password" autocomplete="new-password" /></label>
+        </div>
+        <div class="actions">
+          <button class="btn btn-primary" type="button" id="link">Copiar link de convite</button>
+          <button class="btn btn-ghost" type="button" id="file">Baixar arquivo cifrado</button>
+          <button class="btn btn-ghost" type="button" id="policy">Copiar política do Admin Console</button>
+        </div>
+        <p class="out" id="out" aria-live="polite"></p>
+      </form>
+
+      <h2>5. Distribua para a equipe</h2>
+      <ul>
+        <li><strong>Pelo Admin Console (sem arquivo nem senha):</strong> em Dispositivos → Chrome → Apps e extensões, adicione o Notai pelo ID <code>dehlandkobgbbgkkjokhnkllopbijbge</code> (se quiser, como instalação forçada) e cole a política no campo "Política para extensões". O Notai de cada colaborador já abre no modo Empresa.</li>
+        <li><strong>Pelo link de convite:</strong> envie o link e passe a senha por outro canal. Quem abrir instala o Notai (se ainda não tiver), digita a senha e conecta.</li>
+        <li><strong>Pelo arquivo:</strong> envie o arquivo <code>.notai-empresa</code>; cada um importa em Configurações → Conta Google → Empresa.</li>
+      </ul>
+      <p>Sobre o Client Secret: num app Interno, só contas da sua empresa conseguem autorizar, então o segredo sozinho não dá acesso a nada. A cifra com senha serve para o link e o arquivo poderem circular sem expor a configuração.</p>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <span>Notai · reuniões, e-mail e conversas num só lugar</span>
+    <nav aria-label="Rodapé"><a href="../">Início</a><a href="../politica-de-privacidade/">Política de privacidade</a><a href="../termos-de-uso/">Termos de uso</a></nav>
+  </footer>
+  <script>
+    // Mesma cifra do Notai (src/shared/cryptobox.ts): PBKDF2-SHA256 com 600 mil rodadas e AES-GCM 256.
+    const $ = (id) => document.getElementById(id);
+    const out = (msg, err) => { $('out').textContent = msg; $('out').className = err ? 'out err' : 'out'; };
+    const b64 = (u8) => btoa(String.fromCharCode(...u8));
+    const b64url = (s) => btoa(unescape(encodeURIComponent(s))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    function config() {
+      const dominios = [...new Set($('dominios').value.split(/[\s,;]+/).map((d) => d.trim().toLowerCase().replace(/^@/, '')).filter(Boolean))];
+      const c = { format: 'notai-empresa', version: 1, empresa: $('empresa').value.trim(), dominios, clientId: $('clientId').value.trim(), clientSecret: $('clientSecret').value.trim(), recursos: { gmail: $('gmail').checked, chat: $('chat').checked, drive: $('drive').value } };
+      if (!c.empresa) throw new Error('Falta o nome da empresa.');
+      if (!dominios.length || dominios.some((d) => !/^[a-z0-9-]+(\.[a-z0-9-]+)+$/.test(d))) throw new Error('Confira os domínios (ex.: empresa.com.br).');
+      if (!/^[\w-]+\.apps\.googleusercontent\.com$/.test(c.clientId)) throw new Error('O Client ID deve terminar em .apps.googleusercontent.com.');
+      if (c.clientSecret.length < 10) throw new Error('Falta o Client Secret.');
+      return c;
+    }
+    async function sealed() {
+      const c = config();
+      const pass = $('pass').value;
+      if (pass.length < 12) throw new Error('Use uma senha com pelo menos 12 caracteres.');
+      if (pass !== $('pass2').value) throw new Error('As duas senhas não são iguais.');
+      const salt = crypto.getRandomValues(new Uint8Array(16));
+      const iv = crypto.getRandomValues(new Uint8Array(12));
+      const material = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass.normalize('NFKC')), 'PBKDF2', false, ['deriveKey']);
+      const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', hash: 'SHA-256', salt, iterations: 600000 }, material, { name: 'AES-GCM', length: 256 }, false, ['encrypt']);
+      const data = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, new TextEncoder().encode(JSON.stringify(c))));
+      const box = { v: 1, kdf: 'PBKDF2-SHA256', iter: 600000, salt: b64(salt), iv: b64(iv), data: b64(data) };
+      return { c, file: JSON.stringify({ format: 'notai-empresa-cifrada', version: 1, empresa: c.empresa, box }, null, 2) };
+    }
+    const run = (fn) => async () => { try { await fn(); } catch (e) { out(e.message || String(e), true); } };
+    $('link').addEventListener('click', run(async () => {
+      const { file } = await sealed();
+      await navigator.clipboard.writeText(`https://www.notai.ia.br/entrar/#c=${b64url(file)}`);
+      out('Link copiado. Ele só abre com a senha da empresa: passe a senha por outro canal.');
+    }));
+    $('file').addEventListener('click', run(async () => {
+      const { c, file } = await sealed();
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([file], { type: 'application/json' }));
+      a.download = `Notai - ${c.empresa}.notai-empresa`;
+      a.click();
+      out('Arquivo cifrado baixado.');
+    }));
+    $('policy').addEventListener('click', run(async () => {
+      const c = config();
+      const v = (x) => ({ Value: x });
+      await navigator.clipboard.writeText(JSON.stringify({ empresa: v(c.empresa), dominios: v(c.dominios), clientId: v(c.clientId), clientSecret: v(c.clientSecret), gmail: v(c.recursos.gmail), chat: v(c.recursos.chat), drive: v(c.recursos.drive) }));
+      out('Política copiada. Cole no Admin Console, no campo "Política para extensões" do Notai.');
+    }));
+  </script>
+</body>
+</html>

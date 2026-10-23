@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Entrar com a configuração da empresa · Notai</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="../icon128.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+  <header class="top">
+    <a class="brand" href="../"><img src="../icon128.png" alt="" width="30" height="30" /><span>Notai</span></a>
+    <nav class="nav" aria-label="Principal"><a href="../empresas/">Para empresas</a><a class="cta" href="../#instalar">Instalar</a></nav>
+  </header>
+  <main>
+    <article class="doc">
+      <h1>Convite da sua empresa</h1>
+      <p class="meta" id="empresa"></p>
+      <div class="summary" id="status"><p>Verificando o convite…</p></div>
+      <div id="install" hidden>
+        <h2>1. Instale o Notai</h2>
+        <p>O Notai ainda não está instalado neste Chrome (ou está numa versão antiga).</p>
+        <p><a class="btn btn-primary" href="https://chromewebstore.google.com/detail/dehlandkobgbbgkkjokhnkllopbijbge" target="_blank" rel="noopener">Instalar na Chrome Web Store <span class="arrow">→</span></a></p>
+        <h2>2. Volte a esta página</h2>
+        <p>Depois de instalar, recarregue esta página: o convite continua neste link.</p>
+        <p><button class="btn btn-ghost" type="button" id="retry">Já instalei, tentar de novo</button></p>
+      </div>
+      <h2>Como funciona</h2>
+      <ul>
+        <li>O convite leva a configuração de conexão da empresa, cifrada. Ele fica só no endereço deste link, depois do <code>#</code>, que o navegador nunca envia a servidor nenhum: nem o site do Notai recebe.</li>
+        <li>O Notai abre as Configurações e pede a senha da empresa, que o administrador passa por outro canal. Sem a senha, o convite não abre.</li>
+        <li>Depois é só clicar em "Conectar com a conta da empresa" e entrar com a sua conta da empresa.</li>
+      </ul>
+    </article>
+  </main>
+  <footer class="site-footer">
+    <span>Notai · reuniões, e-mail e conversas num só lugar</span>
+    <nav aria-label="Rodapé"><a href="../">Início</a><a href="../politica-de-privacidade/">Política de privacidade</a><a href="../termos-de-uso/">Termos de uso</a></nav>
+  </footer>
+  <script>
+    // Entrega o convite ao Notai pela ponte que só esta origem tem (externally_connectable). Nada sai do navegador.
+    const EXT = 'dehlandkobgbbgkkjokhnkllopbijbge';
+    const status = document.getElementById('status');
+    const say = (text) => { const p = document.createElement('p'); p.textContent = text; status.replaceChildren(p); };
+    function readInvite() {
+      const m = location.hash.match(/[#&]c=([A-Za-z0-9_-]+)/);
+      if (!m) return null;
+      try {
+        const b = atob(m[1].replace(/-/g, '+').replace(/_/g, '/'));
+        const text = decodeURIComponent(escape(b));
+        const o = JSON.parse(text);
+        return o && o.format === 'notai-empresa-cifrada' ? { text, empresa: String(o.empresa || '') } : null;
+      } catch { return null; }
+    }
+    function deliver() {
+      const inv = readInvite();
+      if (!inv) { say('Este link não tem um convite válido. Peça um novo link ao administrador da sua empresa.'); return; }
+      document.getElementById('empresa').textContent = inv.empresa ? `Configuração da ${inv.empresa}` : '';
+      const api = window.chrome && chrome.runtime && chrome.runtime.sendMessage;
+      if (!api) { say('Instale o Notai para usar este convite.'); document.getElementById('install').hidden = false; return; }
+      chrome.runtime.sendMessage(EXT, { type: 'notai:convite', file: inv.text }, (r) => {
+        if (chrome.runtime.lastError || !r) { say('Instale o Notai (ou atualize) para usar este convite.'); document.getElementById('install').hidden = false; return; }
+        if (!r.ok) { say(`O Notai recusou o convite: ${r.error || 'formato inválido'}. Peça um novo link ao administrador.`); return; }
+        document.getElementById('install').hidden = true;
+        say('Convite entregue ao Notai. As Configurações abriram numa aba nova: digite a senha da empresa e clique em "Conectar com a conta da empresa".');
+      });
+    }
+    document.getElementById('retry').addEventListener('click', () => location.reload());
+    deliver();
+  </script>
+</body>
+</html>
