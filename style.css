@@ -112,9 +112,9 @@ section { margin: 0 0 clamp(64px, 10vw, 120px); }
 .install ol { margin: 14px 0 0; padding-left: 20px; color: var(--text-2); }
 .install li { margin: 0 0 8px; }
 .install li strong { color: var(--text); }
-.ipnet { align-self: start; padding: 18px 20px; border-radius: 14px; border: 1px solid rgba(255, 200, 100, .35); background: rgba(255, 200, 100, .07); font-size: 14.5px; color: var(--text-2); }
-.ipnet h3 { color: var(--warn); margin-bottom: 8px; font-size: 1rem; }
-.ipnet p { margin: 0 0 8px; }
+.modes { align-self: start; padding: 18px 20px; border-radius: 14px; border: 1px solid rgba(255, 200, 100, .35); background: rgba(255, 200, 100, .07); font-size: 14.5px; color: var(--text-2); }
+.modes h3 { color: var(--warn); margin-bottom: 8px; font-size: 1rem; }
+.modes p { margin: 0 0 8px; }
 
 /* ───────── perguntas ───────── */
 .faq-list { display: grid; gap: 10px; }
